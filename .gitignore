@@ -161,6 +161,12 @@ data/model-blacklist.json
 .vscode/
 
 # CLI-specific local config
+
+# Outreach pipeline
+outreach-chrome/
+data/outreach.db
+
+# Claude Code local
 .claude/settings.local.json
 .claude/memory/
 .opencode/settings.local.json
