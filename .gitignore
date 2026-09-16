@@ -165,6 +165,7 @@ data/model-blacklist.json
 # Outreach pipeline
 outreach-chrome/
 data/outreach.db
+data/gmail-sync-state.json
 
 # Claude Code local
 .claude/settings.local.json

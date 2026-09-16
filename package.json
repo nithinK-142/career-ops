@@ -73,7 +73,8 @@
     "outreach:send": "node send-outreach.mjs",
     "outreach:login": "node send-outreach.mjs --login",
     "outreach:query": "node outreach-query-gen.mjs",
-    "outreach:email": "node send-email.mjs"
+    "outreach:email": "node send-email.mjs",
+    "gmail:sync": "node gmail-sync.mjs"
   },
   "keywords": [
     "ai",
@@ -92,7 +93,7 @@
     "grok",
     "ai-agent-skill"
   ],
-  "author": "Santiago Fernández de Valderrama <hi@santifer.io> (https://santifer.io)",
+  "author": "Santiago Fern\u00e1ndez de Valderrama <hi@santifer.io> (https://santifer.io)",
   "homepage": "https://career-ops.org",
   "repository": {
     "type": "git",
@@ -105,6 +106,8 @@
     "dotenv": "^17.0.0",
     "js-yaml": "^5.3.0",
     "nodemailer": "^8.0.5",
-    "playwright": "1.62.1"
+    "playwright": "1.62.1",
+    "imapflow": "^1.6.4",
+    "mailparser": "^3.9.14"
   }
 }

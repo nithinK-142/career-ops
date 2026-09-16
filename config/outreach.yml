@@ -31,3 +31,10 @@ email:
   smtp_port: 465
   verify_timeout_ms: 5000          # SMTP verification timeout per address
   max_verifications_per_second: 2
+
+
+gmail_sync:
+  enabled: true
+  lookback_days: 60
+  imap_host: "imap.gmail.com"
+  imap_port: 993

@@ -43,6 +43,7 @@ import { getCareerOpsRoot } from './path-resolver.mjs';
 import { readStyleTokens, injectThemeStyle, readCvSectionOrder } from './theme-style.mjs';
 import { resolvePdfIndexPath, resolveTrackerPath, resolveWorkspaceRoot } from './tracker-utils.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
+import { readPageBudget } from './cv-page-budget.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const trackerPath = resolveTrackerPath(getCareerOpsRoot());
@@ -1020,6 +1021,17 @@ export function enforcePageBudget(pageCount, { maxPages = 2, strictPages = false
   if (!Number.isInteger(pageCount) || pageCount < 1) {
     throw new Error(`Could not determine the rendered PDF page count (received ${pageCount}).`);
   }
+  if (!maxPagesExplicit || !strictPagesExplicit) {
+    const profileBudget = readPageBudget(resolve(__dirname, 'config', 'profile.yml'));
+    if (!maxPagesExplicit && profileBudget.maxPages !== undefined) {
+      maxPages = profileBudget.maxPages;
+      maxPagesInput = String(profileBudget.maxPages);
+    }
+    if (!strictPagesExplicit && profileBudget.strictPages !== undefined) {
+      strictPages = profileBudget.strictPages;
+    }
+  }
+
   if (!Number.isInteger(maxPages) || maxPages < 1) {
     throw new Error(`Invalid page budget "${maxPages}". Use a positive integer.`);
   }
@@ -1212,6 +1224,7 @@ async function generatePDF() {
   // Parse arguments
   let inputPath, outputPath, format = 'a4', reportNum = '', allowReorder = false;
   let maxPages = 2, maxPagesInput = '2', strictPages = false, batchManifestPath = null;
+  let maxPagesExplicit = false, strictPagesExplicit = false;
 
   for (const arg of args) {
     if (arg.startsWith('--format=')) {
@@ -1223,10 +1236,12 @@ async function generatePDF() {
     } else if (arg.startsWith('--max-pages=')) {
       maxPagesInput = arg.slice('--max-pages='.length);
       maxPages = Number(maxPagesInput);
+      maxPagesExplicit = true;
     } else if (arg === '--allow-reorder') {
       allowReorder = true;
     } else if (arg === '--strict-pages') {
       strictPages = true;
+      strictPagesExplicit = true;
     } else if (arg === '--skip-fact-check') {
       skipFactCheck = true;
     } else if (!inputPath) {

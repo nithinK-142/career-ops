@@ -20,6 +20,10 @@ elapsed-time cadence case — see `confirmed_time_noshow` in `modes/email.md`
 - `config/profile.yml` — User profile (name, identity)
 - `cv.md` — CV for proof points in drafts
 
+## Step 0 — Gmail Reply Sync (optional)
+
+If Gmail sync is configured, run `node gmail-sync.mjs` first. It fetches new inbox messages into `data/reply-candidates.json`; then run `node reply-watch.mjs` to classify them and review tracker updates. Missing credentials should not block the normal follow-up workflow.
+
 ## Step 1 — Run Cadence Script
 
 Execute:
